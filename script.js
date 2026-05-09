@@ -1,42 +1,8 @@
-const menuToggle = document.querySelector('.menu-toggle');
-const nav = document.querySelector('.nav');
-const copyButtons = document.querySelectorAll('.copy-btn');
-const reveals = document.querySelectorAll('.reveal');
-
-if (menuToggle && nav) {
-  menuToggle.addEventListener('click', () => {
-    const isOpen = nav.classList.toggle('open');
-    menuToggle.setAttribute('aria-expanded', String(isOpen));
-  });
-}
-
-copyButtons.forEach((button) => {
-  button.addEventListener('click', async () => {
-    const value = button.getAttribute('data-copy') || '';
-    try {
-      await navigator.clipboard.writeText(value);
-      const status = document.querySelector('.copy-status');
-      if (status) {
-        status.textContent = 'Contract copied.';
-        setTimeout(() => {
-          status.textContent = '';
-        }, 1800);
-      }
-      button.textContent = '✓';
-      setTimeout(() => {
-        button.textContent = '⧉';
-      }, 1200);
-    } catch (error) {
-      const status = document.querySelector('.copy-status');
-      if (status) status.textContent = 'Copy failed. Select and copy manually.';
-    }
-  });
-});
-
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) entry.target.classList.add('visible');
-  });
-}, { threshold: 0.12 });
-
-reveals.forEach((element) => observer.observe(element));
+const CONTRACT='EQBO3bwnNqJN9XGvQr8bLAqXUwUjO314KwuIJgZpnMlOc0ZD';
+const DEDUST_URL=`https://dedust.io/swap/TON/${CONTRACT}`;
+const SOCIALS={telegram:'https://t.me/PeiPeiTON',x:'https://x.com/PeiPei_ton',dedust:DEDUST_URL};
+function copyContract(){navigator.clipboard?.writeText(CONTRACT).then(()=>showToast('Contract copied')).catch(()=>showToast('Copy manually: '+CONTRACT));}
+function showToast(text){const toast=document.querySelector('.toast');if(!toast)return;toast.textContent=text;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),2300)}
+function init(){document.querySelectorAll('[data-contract]').forEach(el=>el.textContent=CONTRACT);document.querySelectorAll('[data-buy]').forEach(el=>{el.href=DEDUST_URL;el.target='_blank';el.rel='noopener noreferrer'});document.querySelectorAll('[data-copy]').forEach(el=>el.addEventListener('click',copyContract));document.querySelectorAll('[data-social="telegram"]').forEach(el=>{el.href=SOCIALS.telegram;el.target='_blank';el.rel='noopener noreferrer'});document.querySelectorAll('[data-social="x"]').forEach(el=>{el.href=SOCIALS.x;el.target='_blank';el.rel='noopener noreferrer'});const btn=document.querySelector('[data-menu]');const panel=document.querySelector('.mobile-panel');btn?.addEventListener('click',()=>panel?.classList.toggle('open'));const path=location.pathname.split('/').pop()||'index.html';document.querySelectorAll('[data-nav]').forEach(a=>{if(a.getAttribute('href')===path)a.classList.add('active')});animateCounters();}
+function animateCounters(){document.querySelectorAll('[data-count]').forEach(el=>{const end=Number(el.dataset.count||0);let current=0;const step=Math.max(1,Math.ceil(end/42));const timer=setInterval(()=>{current+=step;if(current>=end){current=end;clearInterval(timer)}el.textContent=current.toLocaleString('en-US')},28)})}
+document.addEventListener('DOMContentLoaded',init);

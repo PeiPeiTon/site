@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="TON logo">
+  <defs><linearGradient id="t" x1="0" x2="1"><stop offset="0" stop-color="#34c6ff"/><stop offset="1" stop-color="#0088ff"/></linearGradient></defs>
+  <circle cx="60" cy="60" r="54" fill="url(#t)"/>
+  <path d="M29 39h62L60 86 29 39Z" fill="none" stroke="#fff" stroke-width="8" stroke-linejoin="round"/>
+  <path d="M60 39v47" stroke="#fff" stroke-width="8" stroke-linecap="round"/>
+</svg>
